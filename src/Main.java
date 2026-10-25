@@ -3,7 +3,14 @@
 void main() {
     ChessGame gameA = new ChessGame();
     gameA.chessGame();
-    Moves moves = new Moves(gameA);
+    gameA.move.moveRequest("e2","e5");
+    if(gameA.BasicValidation()){
+        gameA.nextMove();
+    }
+    gameA.move.moveRequest("e7","e6");
+    if(gameA.BasicValidation()){
+        gameA.nextMove();
+    }
 
 }
 
