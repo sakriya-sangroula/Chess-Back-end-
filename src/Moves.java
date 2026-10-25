@@ -1,11 +1,6 @@
 import java.util.Objects;
 
 public class Moves {
-    ChessGame game;
-
-    public Moves(ChessGame game) {
-        this.game = game;
-    }
 
     int currentLocationLetterIndex;
     int currentLocationNumberIndex;
@@ -23,38 +18,6 @@ public class Moves {
         moveLocationNumberIndex = moveLocationNumberAscii - 49;
     }
 
-    public boolean BasicValidation() {
-        String turn = game.turn();
-        String piece = game.board.board[currentLocationNumberIndex][currentLocationLetterIndex];
-        String movePieceTo = game.board.board[moveLocationNumberIndex][moveLocationLetterIndex];
-        if (piece.length() > 1) {
-            return false;
-        }
-        if (Objects.equals(turn, "W") && Character.isLowerCase(piece.charAt(0))) {
-            return false;
-        }
-        if (Objects.equals(turn, "B") && Character.isUpperCase(piece.charAt(0))) {
-            return false;
-        }
-        boolean isWhite = Character.isUpperCase(piece.charAt(0));
-        if (isWhite && Objects.equals(turn, "W")) {
-            if (Objects.equals(movePieceTo, "Empty")) {
-                return true;
-            } else {
-                return Character.isLowerCase((movePieceTo.charAt(0)));
-            }
-
-        }
-        if (!isWhite && Objects.equals(turn, "B")) {
-            if (Objects.equals(movePieceTo, "Empty")) {
-                return true;
-            } else {
-                return Character.isUpperCase(movePieceTo.charAt(0));
-            }
-
-        }
-        return false;
-    }
 
 
 }

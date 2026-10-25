@@ -29,4 +29,9 @@ public class Board {
         }
         System.out.println(Arrays.deepToString(board));
     }
+    void changeBoardAfterMove(int currL,int currN,int changeL,int changeN){
+        board[changeN][changeL]=board[currN][currL];
+        board[currN][currL]="Empty";
+        System.out.println(Arrays.deepToString(board));
+    }
 }
