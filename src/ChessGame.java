@@ -19,39 +19,55 @@ public class ChessGame {
     }
 
     Moves move = new Moves();
+
     public boolean BasicValidation() {
         String turn = this.turn();
-        String piece = this.board.board[move.currentLocationNumberIndex][move.currentLocationLetterIndex];
-        String movePieceTo = this.board.board[move.moveLocationNumberIndex][move.moveLocationLetterIndex];
-        if (piece.length() > 1) {
+        Pieces piece = this.board.board[move.currentLocationNumberIndex][move.currentLocationLetterIndex];
+        Pieces movePieceTo = this.board.board[move.moveLocationNumberIndex][move.moveLocationLetterIndex];
+        if (piece==null) {
+            System.out.println("Invalid");
             return false;
         }
-        if (Objects.equals(turn, "W") && Character.isLowerCase(piece.charAt(0))) {
+        if (Objects.equals(turn, "W") && piece.color==pieceColor.black) {
+            System.out.println("Invalid");
             return false;
         }
-        if (Objects.equals(turn, "B") && Character.isUpperCase(piece.charAt(0))) {
+        if (Objects.equals(turn, "B") && piece.color==pieceColor.white) {
+            System.out.println("Invalid");
             return false;
         }
-        boolean isWhite = Character.isUpperCase(piece.charAt(0));
-        if (isWhite && Objects.equals(turn, "W")) {
-            if (Objects.equals(movePieceTo, "Empty")) {
+        if (piece.color==pieceColor.white && Objects.equals(turn, "W")) {
+            if (movePieceTo==null) {
                 return true;
             } else {
-                return Character.isLowerCase((movePieceTo.charAt(0)));
+                if (movePieceTo.color==pieceColor.black) {
+                    return true;
+                } else {
+                    System.out.println("Invalid");
+                    return false;
+                }
             }
         }
-        if (!isWhite && Objects.equals(turn, "B")) {
-            if (Objects.equals(movePieceTo, "Empty")) {
+        if (piece.color==pieceColor.black && Objects.equals(turn, "B")) {
+            if (movePieceTo==null) {
                 return true;
             } else {
-                return Character.isUpperCase(movePieceTo.charAt(0));
+
+                if (movePieceTo.color==pieceColor.white) {
+                    return true;
+                } else {
+                    System.out.println("Invalid");
+                    return false;
+                }
             }
 
         }
+        System.out.println("Invalid");
         return false;
     }
-void nextMove(){
-        this.board.changeBoardAfterMove(move.currentLocationLetterIndex,move.currentLocationNumberIndex,move.moveLocationLetterIndex,move.moveLocationNumberIndex);
+
+    void nextMove() {
+        this.board.changeBoardAfterMove(move.currentLocationLetterIndex, move.currentLocationNumberIndex, move.moveLocationLetterIndex, move.moveLocationNumberIndex);
         totalMove++;
-}
+    }
 }
