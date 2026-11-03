@@ -7,11 +7,13 @@ void main() {
 }
 
 void moveFunction(ChessGame game) {
-    if (game.move.moveRequest("e2", "e5")) {
+    if (game.move.moveRequest("b1", "c3")) {
+        int pieceNumberIndex= game.move.currentLocationNumberIndex;
+        int pieceLetterIndex=game.move.currentLocationLetterIndex;
         if (game.BasicValidation()) {
+            if(game.board.board[pieceNumberIndex][pieceLetterIndex].validMove(game.move)){
             game.nextMove();
         }
     }
-
-}
+}}
 

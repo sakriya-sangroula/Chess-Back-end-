@@ -1,5 +1,5 @@
 import java.util.Objects;
-
+enum playerTurn{w,b}
 public class ChessGame {
 
     int totalMove = 0;
@@ -10,33 +10,32 @@ public class ChessGame {
 
     }
 
-    String turn() {
+    playerTurn turn() {
         if (totalMove % 2 == 0) {
-            return "W";
+            return playerTurn.w;
         } else {
-            return "B";
+            return playerTurn.b;
         }
     }
-
     Moves move = new Moves();
 
     public boolean BasicValidation() {
-        String turn = this.turn();
+        playerTurn turn = this.turn();
         Pieces piece = this.board.board[move.currentLocationNumberIndex][move.currentLocationLetterIndex];
         Pieces movePieceTo = this.board.board[move.moveLocationNumberIndex][move.moveLocationLetterIndex];
         if (piece==null) {
             System.out.println("Invalid");
             return false;
         }
-        if (Objects.equals(turn, "W") && piece.color==pieceColor.black) {
+        if (turn==playerTurn.w && piece.color==pieceColor.black) {
             System.out.println("Invalid");
             return false;
         }
-        if (Objects.equals(turn, "B") && piece.color==pieceColor.white) {
+        if (turn==playerTurn.b && piece.color==pieceColor.white) {
             System.out.println("Invalid");
             return false;
         }
-        if (piece.color==pieceColor.white && Objects.equals(turn, "W")) {
+        if (piece.color==pieceColor.white && turn==playerTurn.w) {
             if (movePieceTo==null) {
                 return true;
             } else {
@@ -48,7 +47,7 @@ public class ChessGame {
                 }
             }
         }
-        if (piece.color==pieceColor.black && Objects.equals(turn, "B")) {
+        if (piece.color==pieceColor.black && turn==playerTurn.b) {
             if (movePieceTo==null) {
                 return true;
             } else {

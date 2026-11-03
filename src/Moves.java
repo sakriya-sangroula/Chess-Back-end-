@@ -5,7 +5,7 @@ public class Moves {
     int currentLocationNumberIndex;
     int moveLocationLetterIndex;
     int moveLocationNumberIndex;
-    int[][] moveChangeIndex =new int[0][0];
+    int[][] moveChangeIndex =new int[1][2];
 
     public boolean moveRequest(String currentLocation, String moveLocation) {
         if(currentLocation.length()!=2||moveLocation.length()!=2){
@@ -20,8 +20,8 @@ public class Moves {
         currentLocationNumberIndex = currentLocationNumberAscii - 49;
         moveLocationLetterIndex = moveLocationLetterAscii - 97;
         moveLocationNumberIndex = moveLocationNumberAscii - 49;
-        moveChangeIndex[0][0]=currentLocationLetterIndex-moveLocationLetterIndex;
-        moveChangeIndex[0][1]=currentLocationNumberIndex-moveLocationNumberIndex;
+        moveChangeIndex[0][0]=moveLocationLetterIndex-currentLocationLetterIndex;
+        moveChangeIndex[0][1]=moveLocationNumberIndex-currentLocationNumberIndex;
         if(currentLocationNumberIndex>7||currentLocationLetterIndex>7||moveLocationNumberIndex>7||moveLocationLetterIndex>7){
             System.out.println("Invalid move request");
             return false;
@@ -31,6 +31,4 @@ public class Moves {
             return false;}
         return true;
     }
-
-
 }
