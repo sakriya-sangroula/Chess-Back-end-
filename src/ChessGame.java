@@ -79,7 +79,7 @@ public class ChessGame {
         if (!BasicValidation()) return "That piece cannot be moved on this turn.";
         int pieceNumberIndex = move.currentLocationNumberIndex;
         int pieceLetterIndex = move.currentLocationLetterIndex;
-        if (!board.board[pieceNumberIndex][pieceLetterIndex].validMove(move)) {
+        if (!board.board[pieceNumberIndex][pieceLetterIndex].validMove(move, board)) {
             return "That piece cannot move to that square.";
         }
         nextMove();
@@ -107,7 +107,7 @@ public class ChessGame {
                     if (piece == null || piece.color != (turn() == playerTurn.w ? pieceColor.white : pieceColor.black)) continue;
                     if (destination != null && destination.color == piece.color) continue;
                     move = candidate;
-                    if (piece.validMove(candidate)) {
+                    if (piece.validMove(candidate, board)) {
                         if (!first) movesJson.append(',');
                         movesJson.append('"').append(file).append(rank).append('"');
                         first = false;
