@@ -7,6 +7,8 @@ abstract boolean validMove(Moves moves);
 
   this.color=color;
  }
+ // Connection layer: supplies the piece name (for example, "pawn") to the frontend.
+ String type() { return getClass().getSimpleName(); }
 };
  class king extends Pieces {
 int [][]possibleMoves={

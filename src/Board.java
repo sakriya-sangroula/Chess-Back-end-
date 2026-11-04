@@ -29,9 +29,26 @@ public class Board {
         }
         System.out.println(Arrays.deepToString(board));
     }
+    // Connection layer: turns the internal board into data that JavaScript can read.
+    // It does not change any chess rules or the board itself.
+    String toJson(playerTurn turn) {
+        StringBuilder json = new StringBuilder("{\"turn\":\"").append(turn).append("\",\"board\":[");
+        for (int row = 7; row >= 0; row--) {
+            if (row < 7) json.append(',');
+            json.append('[');
+            for (int col = 0; col < 8; col++) {
+                if (col > 0) json.append(',');
+                Pieces piece = board[row][col];
+                if (piece == null) json.append("null");
+                else json.append("{\"type\":\"").append(piece.type()).append("\",\"color\":\"").append(piece.color).append("\"}");
+            }
+            json.append(']');
+        }
+        return json.append("]}").toString();
+    }
     void changeBoardAfterMove(int currL,int currN,int changeL,int changeN){
         board[changeN][changeL]=board[currN][currL];
         board[currN][currL]=null;
-        System.out.println(Arrays.deepToString(board));
+
     }
 }
