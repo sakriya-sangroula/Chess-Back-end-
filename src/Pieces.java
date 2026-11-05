@@ -417,26 +417,18 @@ class rook extends Pieces {
 }
 
 class queen extends Pieces {
-    int[][] possibleMoves = {
-            {1, 0},
-            {0, 1},
-            {-1, 0},
-            {0, -1},
-            {1, 1},
-            {-1, -1},
-            {1, -1},
-            {-1, 1}
-
-    };
-
-    @Override
-    boolean validMove(Moves moves, Board board) {
-        System.out.println("Invalid Queen Move");
-        return false;
-    }
+    bishop asBishop;
+    rook asRook;
 
     queen(pieceColor color) {
         super(color);
+        asBishop = new bishop(color);
+        asRook = new rook(color);
+    }
+
+    @Override
+    boolean validMove(Moves moves, Board board) {
+        return asBishop.validMove(moves, board) || asRook.validMove(moves, board);
     }
 }
 
