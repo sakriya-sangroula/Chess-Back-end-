@@ -27,7 +27,7 @@ public class Board {
             board[4][7] = new king(pieceColor.black);
             board[5][7] = new bishop(pieceColor.black);
             board[6][7] = new knight(pieceColor.black);
-            board[7][7] = new knight(pieceColor.black);
+            board[7][7] = new rook(pieceColor.black);
         }
         System.out.println(Arrays.deepToString(board));
     }
