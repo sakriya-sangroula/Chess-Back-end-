@@ -21,8 +21,8 @@ public class ChessGame {
 
     public boolean BasicValidation() {
         playerTurn turn = this.turn();
-        Pieces piece = this.board.board[move.currentLocationNumberIndex][move.currentLocationLetterIndex];
-        Pieces movePieceTo = this.board.board[move.moveLocationNumberIndex][move.moveLocationLetterIndex];
+        Pieces piece = this.board.board[move.currentLocationLetterIndex][move.currentLocationNumberIndex];
+        Pieces movePieceTo = this.board.board[move.moveLocationLetterIndex][move.moveLocationNumberIndex];
         if (piece==null) {
             System.out.println("Invalid");
             return false;
@@ -77,9 +77,9 @@ public class ChessGame {
     public synchronized String makeMove(String from, String to) {
         if (!move.moveRequest(from, to)) return "Use squares from a1 to h8.";
         if (!BasicValidation()) return "That piece cannot be moved on this turn.";
-        int pieceNumberIndex = move.currentLocationNumberIndex;
         int pieceLetterIndex = move.currentLocationLetterIndex;
-        if (!board.board[pieceNumberIndex][pieceLetterIndex].validMove(move, board)) {
+        int pieceNumberIndex = move.currentLocationNumberIndex;
+        if (!board.board[pieceLetterIndex][pieceNumberIndex].validMove(move, board)) {
             return "That piece cannot move to that square.";
         }
         nextMove();
@@ -102,8 +102,8 @@ public class ChessGame {
                 for (char rank = '1'; rank <= '8'; rank++) {
                     Moves candidate = new Moves();
                     if (!candidate.moveRequest(from, "" + file + rank)) continue;
-                    Pieces piece = board.board[candidate.currentLocationNumberIndex][candidate.currentLocationLetterIndex];
-                    Pieces destination = board.board[candidate.moveLocationNumberIndex][candidate.moveLocationLetterIndex];
+                    Pieces piece = board.board[candidate.currentLocationLetterIndex][candidate.currentLocationNumberIndex];
+                    Pieces destination = board.board[candidate.moveLocationLetterIndex][candidate.moveLocationNumberIndex];
                     if (piece == null || piece.color != (turn() == playerTurn.w ? pieceColor.white : pieceColor.black)) continue;
                     if (destination != null && destination.color == piece.color) continue;
                     move = candidate;

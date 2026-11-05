@@ -77,15 +77,168 @@ class knight extends Pieces {
 }
 
 class bishop extends Pieces {
-    int[][] possibleMoves = {
-            {1, 1},
-            {-1, -1},
-            {1, -1},
-            {-1, 1}
-    };
+    // Four diagonal directions, each storing a letter change and a number change.
+    int[][] possibleMoves = new int[4][2];
+
 
     @Override
     boolean validMove(Moves moves, Board board) {
+        if(Math.abs(moves.moveChangeIndex[0][0])==Math.abs(moves.moveChangeIndex[0][1])){
+        // Moving in Positive X and Positive Y
+        int currPositionX = moves.currentLocationLetterIndex;
+        int currPositionY = moves.currentLocationNumberIndex;
+
+            while (currPositionX < 7 && currPositionY < 7 && board.board[currPositionX + 1][currPositionY + 1] == null) {
+                currPositionY++;
+                currPositionX++;
+            }
+            if (color == pieceColor.white) {
+                if (currPositionX == 7 || currPositionY == 7) {
+                    possibleMoves[0][0] = currPositionX - moves.currentLocationLetterIndex;
+                    possibleMoves[0][1] = currPositionY - moves.currentLocationNumberIndex;
+                } else if (board.board[currPositionX + 1][currPositionY + 1] != null && board.board[currPositionX + 1][currPositionY + 1].color == pieceColor.black) {
+                    possibleMoves[0][0] = (currPositionX + 1) - moves.currentLocationLetterIndex;
+                    possibleMoves[0][1] = (currPositionY + 1) - moves.currentLocationNumberIndex;
+                } else if (board.board[currPositionX + 1][currPositionY + 1] != null && board.board[currPositionX + 1][currPositionY + 1].color == pieceColor.white) {
+                    possibleMoves[0][0] = currPositionX - moves.currentLocationLetterIndex;
+                    possibleMoves[0][1] = currPositionY - moves.currentLocationNumberIndex;
+                }
+            } else {
+                if (currPositionX == 7 || currPositionY == 7) {
+                    possibleMoves[0][0] = currPositionX - moves.currentLocationLetterIndex;
+                    possibleMoves[0][1] = currPositionY - moves.currentLocationNumberIndex;
+                } else if (board.board[currPositionX + 1][currPositionY + 1] != null && board.board[currPositionX + 1][currPositionY + 1].color == pieceColor.white) {
+                    possibleMoves[0][0] = (currPositionX + 1) - moves.currentLocationLetterIndex;
+                    possibleMoves[0][1] = (currPositionY + 1) - moves.currentLocationNumberIndex;
+                } else if (board.board[currPositionX + 1][currPositionY + 1] != null && board.board[currPositionX + 1][currPositionY + 1].color == pieceColor.black) {
+                    possibleMoves[0][0] = currPositionX - moves.currentLocationLetterIndex;
+                    possibleMoves[0][1] = currPositionY - moves.currentLocationNumberIndex;
+                }
+            }
+
+        currPositionX = moves.currentLocationLetterIndex;
+        currPositionY = moves.currentLocationNumberIndex;
+        //moving in negative X positive Y
+        while (currPositionY < 7 && currPositionX > 0 && board.board[currPositionX -1][currPositionY +1 ] == null) {
+            currPositionY++;
+            currPositionX--;
+        }
+
+        if (currPositionX == 0 || currPositionY == 7) {
+            possibleMoves[1][0] = currPositionX - moves.currentLocationLetterIndex;
+            possibleMoves[1][1] = currPositionY - moves.currentLocationNumberIndex;
+
+        }
+        if (color == pieceColor.white && currPositionX > 0 && currPositionY < 7) {
+            if (board.board[currPositionX - 1][currPositionY + 1] != null && board.board[currPositionX - 1][currPositionY + 1].color == pieceColor.black) {
+                possibleMoves[1][0] = (currPositionX - 1) - moves.currentLocationLetterIndex;
+                possibleMoves[1][1] = (currPositionY + 1) - moves.currentLocationNumberIndex;
+            } else if (board.board[currPositionX - 1][currPositionY + 1] != null && board.board[currPositionX - 1][currPositionY + 1].color == pieceColor.white) {
+                possibleMoves[1][0] = currPositionX - moves.currentLocationLetterIndex;
+                possibleMoves[1][1] = currPositionY - moves.currentLocationNumberIndex;
+            } else {
+                if (board.board[currPositionX - 1][currPositionY + 1] != null && board.board[currPositionX - 1][currPositionY + 1].color == pieceColor.white) {
+                    possibleMoves[1][0] = (currPositionX - 1) - moves.currentLocationLetterIndex;
+                    possibleMoves[1][1] = (currPositionY + 1) - moves.currentLocationNumberIndex;
+                } else if (board.board[currPositionX - 1][currPositionY + 1] != null && board.board[currPositionX - 1][currPositionY + 1].color == pieceColor.black) {
+                    possibleMoves[1][0] = currPositionX - moves.currentLocationLetterIndex;
+                    possibleMoves[1][1] = currPositionY - moves.currentLocationNumberIndex;
+                }
+
+            }
+        }
+        // moving in Positive x and negative y
+        currPositionX = moves.currentLocationLetterIndex;
+        currPositionY = moves.currentLocationNumberIndex;
+        while (currPositionX < 7 && currPositionY > 0 && board.board[currPositionX + 1][currPositionY - 1] == null) {
+            currPositionY--;
+            currPositionX++;
+        }
+        if (currPositionX == 7 || currPositionY == 0) {
+            possibleMoves[2][0] = currPositionX - moves.currentLocationLetterIndex;
+            possibleMoves[2][1] = currPositionY - moves.currentLocationNumberIndex;
+        }
+        if (color == pieceColor.white && currPositionX < 7 && currPositionY > 0) {
+            if (board.board[currPositionX + 1][currPositionY - 1] != null && board.board[currPositionX + 1][currPositionY - 1].color == pieceColor.black) {
+                possibleMoves[2][0] = (currPositionX + 1) - moves.currentLocationLetterIndex;
+                possibleMoves[2][1] = (currPositionY - 1) - moves.currentLocationNumberIndex;
+            } else if (board.board[currPositionX + 1][currPositionY - 1] != null && board.board[currPositionX + 1][currPositionY - 1].color == pieceColor.white) {
+                possibleMoves[2][0] = currPositionX - moves.currentLocationLetterIndex;
+                possibleMoves[2][1] = currPositionY - moves.currentLocationNumberIndex;
+            }
+        } else if (currPositionX < 7 && currPositionY > 0) {
+            if (board.board[currPositionX + 1][currPositionY - 1] != null && board.board[currPositionX + 1][currPositionY - 1].color == pieceColor.white) {
+                possibleMoves[2][0] = (currPositionX + 1) - moves.currentLocationLetterIndex;
+                possibleMoves[2][1] = (currPositionY - 1) - moves.currentLocationNumberIndex;
+            } else if (board.board[currPositionX + 1][currPositionY - 1] != null && board.board[currPositionX + 1][currPositionY - 1].color == pieceColor.black) {
+                possibleMoves[2][0] = currPositionX - moves.currentLocationLetterIndex;
+                possibleMoves[2][1] = currPositionY - moves.currentLocationNumberIndex;
+            }
+        }
+        // moving in negative X and negative Y
+        currPositionX = moves.currentLocationLetterIndex;
+        currPositionY = moves.currentLocationNumberIndex;
+        while (currPositionY > 0 && currPositionX > 0 && board.board[currPositionX - 1][currPositionY - 1] == null) {
+            currPositionY--;
+            currPositionX--;
+        }
+        if (currPositionX == 0 || currPositionY == 0) {
+            possibleMoves[3][0] = currPositionX - moves.currentLocationLetterIndex;
+            possibleMoves[3][1] = currPositionY - moves.currentLocationNumberIndex;
+        }
+        if (color == pieceColor.white && currPositionX > 0 && currPositionY > 0) {
+            if (board.board[currPositionX - 1][currPositionY - 1] != null && board.board[currPositionX - 1][currPositionY - 1].color == pieceColor.black) {
+                possibleMoves[3][0] = (currPositionX - 1) - moves.currentLocationLetterIndex;
+                possibleMoves[3][1] = (currPositionY - 1) - moves.currentLocationLetterIndex;
+            } else if (board.board[currPositionX - 1][currPositionY - 1] != null && board.board[currPositionX - 1][currPositionY - 1].color == pieceColor.white) {
+                possibleMoves[3][0] = currPositionX - moves.currentLocationLetterIndex;
+                possibleMoves[3][1] = currPositionY - moves.currentLocationNumberIndex;
+            }
+        } else if (currPositionX > 0 && currPositionY > 0) {
+            if (board.board[currPositionX - 1][currPositionY - 1] != null && board.board[currPositionX - 1][currPositionY - 1].color == pieceColor.white) {
+                possibleMoves[3][0] = (currPositionX - 1) - moves.currentLocationLetterIndex;
+                possibleMoves[3][1] = (currPositionY - 1) - moves.currentLocationLetterIndex;
+            } else if (board.board[currPositionX - 1][currPositionY - 1] != null && board.board[currPositionX - 1][currPositionY - 1].color == pieceColor.black) {
+                possibleMoves[3][0] = currPositionX - moves.currentLocationLetterIndex;
+                possibleMoves[3][1] = currPositionY - moves.currentLocationNumberIndex;
+            }
+        }
+        // Check whether the requested move is within the clear distance in each direction.
+        // moveChangeIndex is [number change][letter change], while possibleMoves is [letter change][number change].
+        // Moving +letter, +number
+        if (moves.moveChangeIndex[0][0] > 0 && moves.moveChangeIndex[0][1] > 0) {
+            if (possibleMoves[0][0] >= moves.moveChangeIndex[0][1] && possibleMoves[0][1] >= moves.moveChangeIndex[0][0]) {
+                return true;
+            }
+            System.out.println("Invalid Bishop Moves");
+            return false;
+        }
+        // Moving -letter, +number
+        else if (moves.moveChangeIndex[0][0] > 0 && moves.moveChangeIndex[0][1] < 0) {
+            if (possibleMoves[1][0] <= moves.moveChangeIndex[0][1] && possibleMoves[1][1] >= moves.moveChangeIndex[0][0]) {
+                return true;
+            }
+            System.out.println("Invalid Bishop Move");
+            return false;
+        }
+        // Moving +letter, -number
+        else if (moves.moveChangeIndex[0][0] < 0 && moves.moveChangeIndex[0][1] > 0) {
+            if (possibleMoves[2][0] >= moves.moveChangeIndex[0][1] && possibleMoves[2][1] <= moves.moveChangeIndex[0][0]) {
+                return true;
+            }
+            System.out.println("Invalid Bishop Move");
+            return false;
+        }
+        // Moving -letter, -number
+        else if (moves.moveChangeIndex[0][0] < 0 && moves.moveChangeIndex[0][1] < 0) {
+            if (possibleMoves[3][0] <= moves.moveChangeIndex[0][1] && possibleMoves[3][1] <= moves.moveChangeIndex[0][0]) {
+                return true;
+            }
+            System.out.println("Invalid Bishop Move");
+            return false;
+        }
+        }
+
         System.out.println("Invalid Bishop Move");
         return false;
     }
@@ -156,7 +309,6 @@ class pawn extends Pieces {
     boolean validMove(Moves moves, Board board) {
         boolean movePossible = false;
         if (color == pieceColor.white) {
-
             for (int[] possibleWhiteMove : possibleWhiteMoves) {
                 if (possibleWhiteMove[0] == moves.moveChangeIndex[0][0] && possibleWhiteMove[1] == moves.moveChangeIndex[0][1]) {
                     movePossible = true;
@@ -164,33 +316,29 @@ class pawn extends Pieces {
                 }
             }
             if (movePossible) {
-                if (Arrays.equals(moves.moveChangeIndex[0], possibleWhiteMoves[0]) ) {
-                     if(board.board[moves.moveLocationNumberIndex][moves.moveLocationLetterIndex] == null){
-                         return true;
-                     }
-                     else {
-                         System.out.println("Invalid Pawn Move");
-                         return false;
-                     }
-                } else if (Arrays.equals(moves.moveChangeIndex[0], possibleWhiteMoves[1])){
-                    if(moves.currentLocationNumberIndex==1){
-                        if( board.board[moves.moveLocationNumberIndex][moves.moveLocationLetterIndex] == null){
+                if (Arrays.equals(moves.moveChangeIndex[0], possibleWhiteMoves[0])) {
+                    if (board.board[moves.moveLocationLetterIndex][moves.moveLocationNumberIndex] == null) {
+                        return true;
+                    } else {
+                        System.out.println("Invalid Pawn Move");
+                        return false;
+                    }
+                } else if (Arrays.equals(moves.moveChangeIndex[0], possibleWhiteMoves[1])) {
+                    if (moves.currentLocationNumberIndex == 1) {
+                        if (board.board[moves.moveLocationLetterIndex][moves.moveLocationNumberIndex] == null&&board.board[moves.moveLocationLetterIndex][2]==null) {
                             return true;
-                        }
-                        else {
+                        } else {
                             System.out.println("Invalid Pawn Move");
                             return false;
 
-                    }}
-                    else{
+                        }
+                    } else {
                         return false;
                     }
-                }
-                else if (Arrays.equals(moves.moveChangeIndex[0], possibleWhiteMoves[2]) || Arrays.equals(moves.moveChangeIndex[0], possibleWhiteMoves[3])) {
-                    if( board.board[moves.moveLocationNumberIndex][moves.moveLocationLetterIndex] != null){
+                } else if (Arrays.equals(moves.moveChangeIndex[0], possibleWhiteMoves[2]) || Arrays.equals(moves.moveChangeIndex[0], possibleWhiteMoves[3])) {
+                    if (board.board[moves.moveLocationLetterIndex][moves.moveLocationNumberIndex] != null) {
                         return true;
-                    }
-                    else {
+                    } else {
                         System.out.println("Invalid Pawn Move");
                         return false;
                     }
@@ -208,19 +356,22 @@ class pawn extends Pieces {
                 }
             }
             if (movePossible) {
-                if (Arrays.equals(moves.moveChangeIndex[0], possibleBlackMoves[0]) ) {
-                    return board.board[moves.moveLocationNumberIndex][moves.moveLocationLetterIndex] == null;
+                if (Arrays.equals(moves.moveChangeIndex[0], possibleBlackMoves[0])) {
+                    return board.board[moves.moveLocationLetterIndex][moves.moveLocationNumberIndex] == null;
 
-                } else if (Arrays.equals(moves.moveChangeIndex[0], possibleBlackMoves[1])){
-                    if(moves.currentLocationNumberIndex==6){
-                        return board.board[moves.moveLocationNumberIndex][moves.moveLocationLetterIndex] == null;
-                    }
-                    else{
+                } else if (Arrays.equals(moves.moveChangeIndex[0], possibleBlackMoves[1])) {
+                    if (moves.currentLocationNumberIndex == 6) {
+                        if( board.board[moves.moveLocationLetterIndex][moves.moveLocationNumberIndex] == null&&board.board[moves.moveLocationLetterIndex][5]==null){
+                            return true;
+                        }
+                        else{
+                            System.out.println("Invalid Pawn Move");
+                        }
+                    } else {
                         return false;
                     }
-                }
-                else if (Arrays.equals(moves.moveChangeIndex[0], possibleBlackMoves[2]) || Arrays.equals(moves.moveChangeIndex[0], possibleBlackMoves[3])) {
-                    return board.board[moves.moveLocationNumberIndex][moves.moveLocationLetterIndex] != null;
+                } else if (Arrays.equals(moves.moveChangeIndex[0], possibleBlackMoves[2]) || Arrays.equals(moves.moveChangeIndex[0], possibleBlackMoves[3])) {
+                    return board.board[moves.moveLocationLetterIndex][moves.moveLocationNumberIndex] != null;
                 }
             } else {
                 return movePossible;
