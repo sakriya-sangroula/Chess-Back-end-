@@ -5,6 +5,7 @@ public class Moves {
     int currentLocationNumberIndex;
     int moveLocationLetterIndex;
     int moveLocationNumberIndex;
+    // Move deltas use [letter change][number change].
     int[][] moveChangeIndex =new int[1][2];
 
     public boolean moveRequest(String currentLocation, String moveLocation) {
@@ -20,8 +21,8 @@ public class Moves {
         currentLocationNumberIndex = currentLocationNumberAscii - 49;
         moveLocationLetterIndex = moveLocationLetterAscii - 97;
         moveLocationNumberIndex = moveLocationNumberAscii - 49;
-        moveChangeIndex[0][0]=moveLocationNumberIndex-currentLocationNumberIndex;
-        moveChangeIndex[0][1]=moveLocationLetterIndex-currentLocationLetterIndex;
+        moveChangeIndex[0][0]=moveLocationLetterIndex-currentLocationLetterIndex;
+        moveChangeIndex[0][1]=moveLocationNumberIndex-currentLocationNumberIndex;
         if(currentLocationNumberIndex>7||currentLocationLetterIndex>7||moveLocationNumberIndex>7||moveLocationLetterIndex>7){
             System.out.println("Invalid move request");
             return false;
