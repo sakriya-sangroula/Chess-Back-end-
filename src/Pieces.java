@@ -136,7 +136,7 @@ class bishop extends Pieces {
             } else if (board.board[currPositionX - 1][currPositionY + 1] != null && board.board[currPositionX - 1][currPositionY + 1].color == pieceColor.white) {
                 possibleMoves[1][0] = currPositionX - moves.currentLocationLetterIndex;
                 possibleMoves[1][1] = currPositionY - moves.currentLocationNumberIndex;
-            } else {
+            }} else if (color==pieceColor.black && currPositionX > 0 && currPositionY < 7){
                 if (board.board[currPositionX - 1][currPositionY + 1] != null && board.board[currPositionX - 1][currPositionY + 1].color == pieceColor.white) {
                     possibleMoves[1][0] = (currPositionX - 1) - moves.currentLocationLetterIndex;
                     possibleMoves[1][1] = (currPositionY + 1) - moves.currentLocationNumberIndex;
@@ -146,7 +146,6 @@ class bishop extends Pieces {
                 }
 
             }
-        }
         // moving in Positive x and negative y
         currPositionX = moves.currentLocationLetterIndex;
         currPositionY = moves.currentLocationNumberIndex;
@@ -189,7 +188,7 @@ class bishop extends Pieces {
         if (color == pieceColor.white && currPositionX > 0 && currPositionY > 0) {
             if (board.board[currPositionX - 1][currPositionY - 1] != null && board.board[currPositionX - 1][currPositionY - 1].color == pieceColor.black) {
                 possibleMoves[3][0] = (currPositionX - 1) - moves.currentLocationLetterIndex;
-                possibleMoves[3][1] = (currPositionY - 1) - moves.currentLocationLetterIndex;
+                possibleMoves[3][1] = (currPositionY - 1) - moves.currentLocationNumberIndex;
             } else if (board.board[currPositionX - 1][currPositionY - 1] != null && board.board[currPositionX - 1][currPositionY - 1].color == pieceColor.white) {
                 possibleMoves[3][0] = currPositionX - moves.currentLocationLetterIndex;
                 possibleMoves[3][1] = currPositionY - moves.currentLocationNumberIndex;
@@ -197,7 +196,7 @@ class bishop extends Pieces {
         } else if (currPositionX > 0 && currPositionY > 0) {
             if (board.board[currPositionX - 1][currPositionY - 1] != null && board.board[currPositionX - 1][currPositionY - 1].color == pieceColor.white) {
                 possibleMoves[3][0] = (currPositionX - 1) - moves.currentLocationLetterIndex;
-                possibleMoves[3][1] = (currPositionY - 1) - moves.currentLocationLetterIndex;
+                possibleMoves[3][1] = (currPositionY - 1) - moves.currentLocationNumberIndex;
             } else if (board.board[currPositionX - 1][currPositionY - 1] != null && board.board[currPositionX - 1][currPositionY - 1].color == pieceColor.black) {
                 possibleMoves[3][0] = currPositionX - moves.currentLocationLetterIndex;
                 possibleMoves[3][1] = currPositionY - moves.currentLocationNumberIndex;
